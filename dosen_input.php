@@ -10,10 +10,11 @@
 
 <body>
     <?php
-    $mysqli = new mysqli("localhost", "root", "", "prowebif");
+    $dosenObj = new dosen();
+    $programstudiObj = new programstudi();
     ?>
     <h1>Input Data Dosen</h1>
-    <form action="dosen_proses.php" method="post">
+    <form action="controllers/dosencontroll.inc.php" method="post">
     <input type="hidden" name="aksi" value="input">
         <table>
             <tr>
@@ -33,14 +34,12 @@
                 <select name="prodi">
                         <option value="" selected disabled hidden>--Pilih--</option>
                         <?php
-                        $sql = "SELECT id, nama_prodi FROM program_studi";
-                        $result = $mysqli->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
+                        $result = $programstudiObj->getProgramstudi();
+                        foreach ($result as $row){
+                            if ($dosenObj->getIdProdi($nip) != $row["id"]){
                                 echo "<option value=" . $row["id"] . ">" . $row["nama_prodi"] . "</option>";
                             }
-                        } else {
-                            echo "<option value='-'>None</option>";
+                        
                         }
                         ?>
                     </select>

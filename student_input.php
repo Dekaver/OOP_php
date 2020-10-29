@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-
 <body>
     <h1>Input Data Mahasiswa</h1>
-    <form action="student_proses.php" method="post">
+    <form action="controllers\studentcontroll.inc.php" method="post">
     <input type="hidden" name="aksi" value="input">
         <table>
             <tr>
@@ -30,14 +20,10 @@
                     <select name="prodi">
                         <option value="" selected disabled hidden>--Pilih--</option>
                         <?php
-                        $sql = "SELECT id, nama_prodi FROM program_studi";
-                        $result = $mysqli->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<option value=" . $row["id"] . ">" . $row["nama_prodi"] . "</option>";
-                            }
-                        } else {
-                            echo "<option value='-'>Tidak ada data</option>";
+                        $prodiObj = new programstudi();
+                        $result = $prodiObj->getProgramstudi();
+                        foreach ($result as $row){
+                            echo "<option value=" . $row["id"] . ">" . $row["nama_prodi"] . "</option>";
                         }
                         ?>
                     </select>
@@ -56,14 +42,10 @@
                     <select name="dosenwali">
                         <option value="" selected disabled hidden>--Pilih--</option>
                         <?php
-                        $sql = "SELECT nip, nama_dsn FROM dosen";
-                        $result = $mysqli->query($sql);
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<option value=" . $row["nip"] . ">" . $row["nip"] . " - " . $row["nama_dsn"] . "</option>";
-                            }
-                        } else {
-                            echo "<option value='-'>Tidak ada data</option>";
+                        $dosenObj = new dosen();
+                        $result = $dosenObj->getDosen();
+                        foreach ($result as $row){
+                            echo "<option value=" . $row["nip"] . ">" . $row["nip"] . " - " . $row["nama_dsn"] . "</option>";
                         }
                         ?>
                     </select>
@@ -88,4 +70,3 @@
         </table>
     </form>
 </body>
-</html>

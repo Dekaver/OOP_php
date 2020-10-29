@@ -1,54 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
 
 <body>
-    <?php 
-         $mysqli = new mysqli("localhost", "root", "", "prowebif");
-         
-         $sql = "SELECT nama_mhs, nim, id_prodi, nama_prodi, jenis_kelamin, alamat_mhs, tahunmasuk 
-                 FROM mahasiswa INNER JOIN program_studi 
-                 on mahasiswa.id_prodi=program_studi.id 
-                 where nim=" . $_GET['nim'] . "";
-         $result = $mysqli->query($sql);
-         $row = $result->fetch_assoc()
+    <?php
+    $mahasiswaObj = new mahasiswa();
+    $programstudiObj = new programstudi();
+    $dosenObj = new dosen();
+    $nim = $_GET['nim'];
+    
+
+
     ?>
     <h1>Input Data Mahasiswa</h1>
-    <form action="student_proses.php" method="post">
+    <form action="controllers\studentcontroll.inc.php" method="post">
     <input type="hidden" name="aksi" value="edit">
-    <input type="hidden" name="oldnim" value="<?php echo $row['nim']; ?>">
+    <input type="hidden" name="oldnim" value="<?php echo $nim; ?>">
         <table>
             <tr>
                 <td>Nama</td>
                 <td>:</td>
-                <td><input type="text" name="namamhs" value="<?php echo $row["nama_mhs"]?>"></td>
+                <td><input type="text" name="namamhs" value="<?php echo $mahasiswaObj->getNama($nim)?>"></td>
             </tr>
             <tr>
                 <td>NIM</td>
                 <td>:</td>
-                <td><input type="text" name="nim" value="<?php echo $row["nim"]?>"></td>
+                <td><input type="text" name="nim" value="<?php echo $nim?>"></td>
             </tr>
             <tr>
                 <td>Program Studi</td>
                 <td>:</td>
                 <td>
                     <select name="prodi">
-                        <option value="<?php echo $row["id_prodi"]?>"><?php echo $row["nama_prodi"]?></option>
+                        <option value="<?php echo $mahasiswaObj->getIdProdi($nim)?>"><?php echo $programstudiObj->getNama($mahasiswaObj->getIdProdi($nim))?></option>
                         <?php
-                        $sql2 = "SELECT id, nama_prodi FROM program_studi";
-                        $result2 = $mysqli->query($sql2);
-                        if ($result2->num_rows > 0) {
-                            while ($row2 = $result2->fetch_assoc()) {
-                                echo "<option value=" . $row2["id"] . ">" . $row2["nama_prodi"] . "</option>";
+                        $result = $programstudiObj->getProgramstudi();
+                        foreach ($result as $row){
+                            if ($mahasiswaObj->getIdProdi($nim) != $row["id"]){
+                                echo "<option value=" . $row["id"] . ">" . $row["nama_prodi"] . "</option>";
                             }
-                        } else {
-                            echo "<option value='-'>None</option>";
                         }
                         ?>
                     </select>
@@ -65,21 +52,13 @@
                 <td>:</td>
                 <td>
                     <select name="dosenwali">
+                    <option value="<?php echo $mahasiswaObj->getIdDosenwali($nim)?>"><?php echo $dosenObj->getNama($mahasiswaObj->getIdDosenwali($nim))?></option>
                         <?php
-                        $sql4 = "SELECT nip, nama_dsn FROM mahasiswa INNER JOIN dosen where nim=" . $_GET['nim'] . "";
-                        $result4 = $mysqli->query($sql4);
-                        $row4 = $result4->fetch_assoc();
-                        ?>
-                        <option value="<?php echo $row4["nip"]?>"><?php echo $row4["nama_dsn"]?></option>
-                        <?php
-                        $sql3 = "SELECT nip, nama_dsn FROM dosen";
-                        $result3 = $mysqli->query($sql3);
-                        if ($result3->num_rows > 0) {
-                            while ($row3 = $result3->fetch_assoc()) {
-                                echo "<option value=" . $row3["nip"] . ">" . $row3["nip"] . " - " . $row3["nama_dsn"] . "</option>";
+                        $result = $dosenObj->getDosen();
+                        foreach ($result as $row){
+                            if ($mahasiswaObj->getIdDosenwali($nim) != $row["nip"]){
+                                echo "<option value=" . $row["nip"] . ">" . $row["nama_dsn"] . "</option>";
                             }
-                        } else {
-                            echo "<option value='-'>None</option>";
                         }
                         ?>
                     </select>
@@ -88,12 +67,12 @@
             <tr>
                 <td>Alamat</td>
                 <td>:</td>
-                <td><textarea name="alamat" cols="30" rows="10" value="<?php echo $row["alamat_mhs"]?>"><?php echo $row["alamat_mhs"]?></textarea></td>
+                <td><textarea name="alamat" cols="30" rows="10" value="<?php echo $mahasiswaObj->getAlamat($nim)?>"><?php echo $mahasiswaObj->getAlamat($nim)   ?></textarea></td>
             </tr>
             <tr>
                 <td>Tahun masuk</td>
                 <td>:</td>
-                <td><input type="number" name="tahunmasuk" value="<?php echo $row["tahunmasuk"]?>"></td>
+                <td><input type="number" name="tahunmasuk" value="<?php echo $mahasiswaObj->getTahunmasuk($nim)?>"></td>
             </tr>
             <tr>
                 <td></td>

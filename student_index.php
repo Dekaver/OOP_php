@@ -34,21 +34,21 @@
                 </tr>
             </thead>
             <tbody>';
-        //mengecek apakah tabel ada datanya atau tidak dengan kode num_rows
         
         $no=1;
-        // menampilkan hasil query data berdasarkan baris. nip, nama, prodi dll merujuk ke nama kolom karena kita pakai method fetch_assoc
+        $dosenObj = new dosen();
+        $prodiObj = new programstudi();
         foreach ($result as $row) {
             echo "<tr>
                 <td>" . $no++ . "</td>
                 <td>" . $row["nim"] . "</td>
                 <td>" . $row["nama_mhs"] . "</td>
-                <td>" . $row["id_prodi"] . "</td>
+                <td>" . $prodiObj->getNama($row["id_prodi"]) . "</td>
                 <td>" . $row["jenis_kelamin"] . "</td>
                 <td>" . $row["tahunmasuk"] . "</td>
-                <td>" . $row["dosenwali"] . "</td>
+                <td>" . $dosenObj->getNama($row["dosenwali"]) . "</td>
                 <td>" . $row["alamat_mhs"] . "</td>
-                <td><a href='?f=student_edit&&nim=" . $row["nim"] . "'>Edit</a>||<a href='student_proses.php?aksi=hapus&&nim=" . $row["nim"] . "'>Hapus</a>
+                <td><a href='?f=student_edit&&nim=" . $row["nim"] . "'>Edit</a>||<a href='controllers\studentcontroll.inc.php?aksi=hapus&&nim=" . $row["nim"] . "'>Hapus</a>
             </tr>";
         }
         

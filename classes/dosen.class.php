@@ -16,7 +16,7 @@ class dosen extends Dbh{
         return $result;
     }
 
-    protected function getNama($nip){
+    public function getNama($nip){
         $sql = "SELECT nama_dsn FROM dosen WHERE nip = ?";
         $st = $this->connect()->prepare($sql);
         $st->execute([$nip]);
@@ -24,7 +24,7 @@ class dosen extends Dbh{
         return $result['nama_dsn'];
     }
 
-    protected function getAlamat($nip){
+    public function getAlamat($nip){
         $sql = "SELECT alamat_dsn FROM dosen WHERE nip = ?";
         $st = $this->connect()->prepare($sql);
         $st->execute([$nip]);
@@ -32,7 +32,7 @@ class dosen extends Dbh{
         return $result['alamat_dsn'];
     }
 
-    protected function getIdProdi($nip){
+    public function getIdProdi($nip){
         $sql = "SELECT id_prodi FROM dosen WHERE nip = ?";
         $st = $this->connect()->prepare($sql);
         $st->execute([$nip]);
@@ -40,7 +40,7 @@ class dosen extends Dbh{
         return $result['id_prodi'];
     }
     
-    protected function getPendidikan($nip){
+    public function getPendidikan($nip){
         $sql = "SELECT pendidikan FROM dosen WHERE nip = ?";
         $st = $this->connect()->prepare($sql);
         $st->execute([$nip]);
@@ -48,23 +48,21 @@ class dosen extends Dbh{
         return $result['pendidikan'];
     }
     
-    protected function setDosen($nip, $nama, $prodi, $alamat, $pendidikan){
-        $sql = "INSERT INTO dosen(nip, nama_dsn, id_prodi, alamat_dsn, pendidikan, tahunmasuk, jenis_kelamin, id_pembayaran) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    public function addDosen($nip, $nama, $prodi, $alamat, $pendidikan){
+        $sql = "INSERT INTO dosen(nip, nama_dsn, id_prodi, alamat_dsn, pendidikan) VALUES (?, ?, ?, ?, ?)";
         $st = $this->connect()->prepare($sql);
         $st->execute([$nip, $nama, $prodi, $alamat, $pendidikan]);
     }
 
-    protected function removeDosen($nip){
+    public function removeDosen($nip){
         $sql = "DELETE FROM dosen WHERE nip = ?";
         $st = $this->connect()->prepare($sql);
         $st->execute([$nip]);
     }
 
-    protected function changeDosen($nip, $nama, $prodi, $alamat, $pendidikan, $oldnip){
-        $sql = "UPDATE dosen SET nip = ?, nama_dsn = ?, id_prodi = ?, jenis_kelamin = ?, alamat_dsn=?, pendidikan=?, tahunmasuk=?, id_pembayaran=? WHERE nip='$oldnip'";
+    public function updateDosen($nip, $nama, $prodi, $alamat, $pendidikan, $oldnip){
+        $sql = "UPDATE dosen SET nip = ?, nama_dsn = ?, id_prodi = ?, alamat_dsn=?, pendidikan=? WHERE nip='$oldnip'";
         $st = $this->connect()->prepare($sql);
         $st->execute([$nip, $nama, $prodi, $alamat, $pendidikan]);
     }
-
-    
 }

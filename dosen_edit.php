@@ -12,43 +12,38 @@
 <body>
 
     <?php 
-         $mysqli = new mysqli("localhost", "root", "", "prowebif");
-         
-         $sql = "SELECT nip, nama_dsn, id_prodi, pendidikan, alamat_dsn, nama_prodi FROM dosen INNER JOIN program_studi ON dosen.id_prodi=program_studi.id where nip='".$_GET['nip']."'";
-         $result = $mysqli->query($sql);
-         $row = $result->fetch_assoc()
+    $dosenObj = new dosen();
+    $programstudiObj = new programstudi();
+    $nip = $_GET['nip'];
     ?>
     <h1>Edit Data Dosen</h1>
     <div class="content">
     <form action="dosen_proses.php" method="post">
         <input type="hidden" name="aksi" value="edit">
-        <input type="hidden" name="oldnip" value="<?php echo $row['nip']; ?>">
+        <input type="hidden" name="oldnip" value="<?php echo $nip; ?>">
         <table>
             <tr>
                 <td>Nama</td>
                 <td>:</td>
-                <td><input type="text" name="nama" value="<?php echo $row['nama_dsn']; ?>"></td>
+                <td><input type="text" name="nama" value="<?php echo $dosenObj->getNama($nip) ?>"></td>
             </tr>
             <tr>
                 <td>NIP</td>
                 <td>:</td>
-                <td><input type="text" name="nip"  value="<?php echo $row['nip']; ?>"></td>
+                <td><input type="text" name="nip"  value="<?php echo $nip ?>"></td>
             </tr>
             <tr>
                 <td>Program Studi</td>
                 <td>:</td>
                 <td>
-                    <select name="prodi">
-                        <option value="<?php echo $row['id_prodi']; ?>"><?php echo $row['nama_prodi']; ?></option>
+                <select name="prodi">
+                        <option value="<?php echo $dosenObj->getIdProdi($nip)?>"><?php echo $programstudiObj->getNama($dosenObj->getIdProdi($nip))?></option>
                         <?php
-                        $sql2 = "SELECT id, nama_prodi FROM program_studi";
-                        $result2 = $mysqli->query($sql2);
-                        if ($result2->num_rows > 0) {
-                            while ($row2 = $result2->fetch_assoc()) {
-                                echo "<option value=" . $row2["id"] . ">" . $row2["nama_prodi"] . "</option>";
+                        $result = $programstudiObj->getProgramstudi();
+                        foreach ($result as $row){
+                            if ($dosenObj->getIdProdi($nip) != $row["id"]){
+                                echo "<option value=" . $row["id"] . ">" . $row["nama_prodi"] . "</option>";
                             }
-                        } else {
-                            echo "<option value='0'>None</option>";
                         }
                         ?>
                     </select>
@@ -63,7 +58,7 @@
             <tr>
                 <td>Alamat</td>
                 <td>:</td>
-                <td><textarea name="alamat" cols="30" rows="10"><?php echo $row['alamat_dsn']; ?></textarea></td>
+                <td><textarea name="alamat" cols="30" rows="10" value="<?php echo $dosenObj->getAlamat($nip) ?>"><?php echo $dosenObj->getAlamat($nip) ?></textarea></td>
             </tr>
             <tr>
                 <td></td>
