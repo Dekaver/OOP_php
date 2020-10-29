@@ -12,7 +12,3 @@ class Dbh {
         return $pdo;
     }
 }
-
-
-
-

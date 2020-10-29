@@ -10,7 +10,6 @@ function myAutoLoaders ($className){
     if (!file_exists($fileName)){
         return false;
     }
-
     include_once $path . $className . $extension;
 }
 ?>

@@ -1,0 +1,97 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(212, 212, 212);
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    height: 400px;
+    width: 500px;
+    background-color: white;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    border-radius: .25rem;
+    box-shadow: 0 10px 10px -3px rgba(50, 99, 233, 0.356);
+}
+
+label{
+    padding-left: 8px;
+}
+
+input{
+    margin: 12px;
+    font-size: 1rem;
+    padding: 8px;
+    color: rgb(126, 126, 126);
+    display: inline-block;
+}
+
+input:focus{
+    outline-color: rgba(33, 37, 236, 0.329);
+}
+
+.login{
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background-color: rgb(22, 56, 252);
+    color: white;
+    padding: 12px;
+    text-transform: uppercase;
+    font-family: inherit;
+    border: 1px solid rgb(22,56,252);
+    border-radius: .25rem;
+    cursor: pointer;
+}
+
+.login:hover{
+    background-color: rgb(2, 33, 212);
+}
+
+.reset{
+    position: absolute;
+    right: 120px;
+    bottom: 20px;
+    background-color: rgb(254, 254, 255);
+    color: rgb(2, 33, 212);
+    padding: 12px;
+    text-transform: uppercase;
+    font-family: inherit;
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+    border: 1px solid rgb(3,33,212);
+}
+
+#informatika{
+    width: 100px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#itk{
+    width: 150px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+h3{
+    padding-left: 8px;
+    padding-bottom: 20px;
+}
+fieldset{
+    border-radius: 5px;
+    border-color:  rgb(2, 33, 212);
+}
+
+#incorrect{
+    color :red;
+}
