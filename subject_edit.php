@@ -10,35 +10,33 @@
 
 <body>
     <?php 
-         $mysqli = new mysqli("localhost", "root", "", "prowebif");
-         
-         $sql = "SELECT * FROM matakuliah where kode_matakuliah='".$_GET['kode_matakuliah']."'";
-         $result = $mysqli->query($sql);
-         $row = $result->fetch_assoc()
+    $matakuliahObj = new matakuliah();
+    
     ?>
     <div class="content">
     <h1>Edit Data mata kuliah</h1>
-    <form action="subject_proses.php" method="post">
+    <form action="controllers/subjectcontroll.inc.php" method="post">
         <input type="hidden" name="aksi" value="edit">
+        <input type="hidden" name="oldkode_matakuliah" value="<?php echo $_GET['kode_matakuliah'] ?>">
         <table>
             <tr>
                 <td>Nama mata kuliah</td>
                 <td>:</td>
-                <td><input type="text" name="nama_matakuliah" value="<?php echo $row['nama_matakuliah']; ?>"></td>
+                <td><input type="text" name="nama_matakuliah" value="<?php echo $matakuliahObj->getNama($_GET['kode_matakuliah']) ?>"></td>
             </tr>
             <tr>
                 <td>Kode mata kuliah</td>
                 <td>:</td>
-                <td><input type="text" name="kode_matakuliah"  value="<?php echo $row['kode_matakuliah']; ?>"></td>
+                <td><input type="text" name="kode_matakuliah"  value="<?php echo $_GET['kode_matakuliah']; ?>"></td>
             </tr>
             <tr>
             <td>Jumlah sks</td>
                 <td>:</td>
-                <td><input type="number" name="sks"  value="<?php echo $row['sks']; ?>"></td>
+                <td><input type="number" name="sks"  value="<?php echo $matakuliahObj->getSks($_GET['kode_matakuliah']) ?>"></td>
             </tr>
             <td>Semester</td>
                 <td>:</td>
-                <td><input type="number" name="semester"  value="<?php echo $row['semester']; ?>"></td>
+                <td><input type="number" name="semester"  value="<?php echo $matakuliahObj->getSemester($_GET['kode_matakuliah']) ?>"></td>
             </tr>
             <tr>
                 <td></td>
@@ -48,6 +46,6 @@
             </tr>
         </table>
     </form>
-    <div class="content">
+    
 </body>
 </html>

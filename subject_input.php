@@ -10,10 +10,10 @@
 
 <body>
     <h1>Input Data mata kuliah</h1>
-    <form action="subject_proses.php" method="post">
+    <form action="controllers/subjectcontroll.inc.php" method="post">
     <input type="hidden" name="aksi" value="input">
         <table>
-        <tr>
+            <tr>
                 <td>Nama mata kuliah</td>
                 <td>:</td>
                 <td><input type="text" name="nama_matakuliah" ></td>

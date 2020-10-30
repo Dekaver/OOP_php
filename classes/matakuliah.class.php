@@ -52,10 +52,10 @@ class matakuliah extends Dbh{
         $st->execute([$kode_matakuliah]);
     }
 
-    public function updateMatakuliah($kode_matakuliah, $nama, $sks, $semester, $oldkode_matakuliah){
-        $sql = "UPDATE matakuliah SET kode_matakuliah = ?, nama_matakuliah = ?, sks = ?, semester=? WHERE kode_matakuliah='$oldkode_matakuliah'";
+    public function updateMatakuliah($kode, $nama, $sks, $semester, $oldkode){
+        $sql = "UPDATE matakuliah SET kode_matakuliah = ?, nama_matakuliah = ?, sks = ?, semester=? WHERE kode_matakuliah=?";
         $st = $this->connect()->prepare($sql);
-        $st->execute([$kode_matakuliah, $nama, $sks, $semester]);
+        $st->execute([$kode, $nama, $sks, $semester, $oldkode]);
     }
 
     
