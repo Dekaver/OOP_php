@@ -14,9 +14,9 @@
         $mahasiswaObj = new mahasiswa();
         $id = $_GET['id_pembayaran'];
     ?>
-    <h1>Edit Data Mahasiswa</h1>
+    <h1>Edit Pembayaran</h1>
     <div class="content">
-    <form action="student_proses.php" method="post">
+    <form action="controllers/paymentcontroll.inc.php" method="post">
         <input type="hidden" name="aksi" value="edit">
         <input type="hidden" name="oldId" value="<?php echo $id ?>">
         <table>

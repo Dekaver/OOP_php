@@ -11,4 +11,8 @@ class Dbh {
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         return $pdo;
     }
+
+    protected function getMysqli(){
+        return new mysqli($this->host, $this->user, $this->pass, $this->dbName);
+    }
 }

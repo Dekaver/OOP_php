@@ -7,14 +7,14 @@
         $mahasiswaObj = new mahasiswa();
     ?>
     <h1>Input Bukti Pembayaran</h1>
-    <form action="payment_proses.php" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="aksi" value="inputmhs">
+    <form action="controllers/paymentcontroll.inc.php" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="aksi" value="input">
     <input type="hidden" name="post" value="1000000">
         <table>
-        <tr>
+            <tr>
                 <td>Id Pembayaran</td>
                 <td>:</td>
-                <td><input type="text" name="id"></td>
+                <td><input type="text" name="id_pembayaran"></td>
             </tr>
             <tr>
                 <td>NIM</td>
