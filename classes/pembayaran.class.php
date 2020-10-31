@@ -32,7 +32,7 @@ class pembayaran extends Dbh{
         return $result['bank'];
     }
 
-    public function getSNominal($id_pembayaran){
+    public function getNominal($id_pembayaran){
         $sql = "SELECT nominal FROM pembayaran WHERE id_pembayaran = ?";
         $st = $this->connect()->prepare($sql);
         $st->execute([$id_pembayaran]);

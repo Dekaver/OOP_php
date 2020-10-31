@@ -10,48 +10,62 @@
 
 <body>
     <?php 
-         $mysqli = new mysqli("localhost", "root", "", "prowebif");
-         
-         $sql = "SELECT * FROM mahasiswa where nim='".$_GET['nim']."'";
-         $result = $mysqli->query($sql);
-         $row = $result->fetch_assoc()
+        $pembayaranObj = new pembayaran();
+        $mahasiswaObj = new mahasiswa();
+        $id = $_GET['id_pembayaran'];
     ?>
     <h1>Edit Data Mahasiswa</h1>
     <div class="content">
     <form action="student_proses.php" method="post">
         <input type="hidden" name="aksi" value="edit">
+        <input type="hidden" name="oldId" value="<?php echo $id ?>">
         <table>
             <tr>
-                <td>Nama</td>
+                <td>Id Pembayaran</td>
                 <td>:</td>
-                <td><input type="text" name="nama" value="<?php echo $row['nama']; ?>"></td>
+                <td><input type="text" name="id" value="<?php echo $id; ?>"></td>
             </tr>
             <tr>
                 <td>NIM</td>
                 <td>:</td>
-                <td><input type="text" name="nim"  value="<?php echo $row['nim']; ?>"></td>
-            </tr>
-            <tr>
-                <td>Program Studi</td>
-                <td>:</td>
                 <td>
-                    <select name="prodi">
-                        <option value="Informatika">Informatika</option>
-                        <option value="Sistem Informasi">Sistem Informasi</option>
-                        <option value="Matematika">Matematika</option>
+                    <select name="nim">
+                    <option value="<?php echo $pembayaranObj->getNim($id); ?>"><?php echo $mahasiswaObj->getNama($pembayaranObj->getNim($id))?></option>
+                        <?php
+                        $result = $mahasiswaObj->getMahasiswa();
+                        foreach ($result as $row){
+                            if ($pembayaranObj->getNim($id) != $row["nim"]){
+                                echo "<option value=" . $row["nim"] . ">" . $row["nama_mhs"] . "</option>";
+                            }
+                        }
+                        ?>
                     </select>
                 </td>
             </tr>
             <tr>
-                <td>jenis kelamin</td>
+                <td>tanggal</td>
                 <td>:</td>
-                <td><input type="radio" name="jenis kelamin" value="laki-laki">Laki-laki
-                    <input type="radio" name="jenis kelamin" value="perempuan">Perempuan</td>
+                <td><input type="date" name="tanggal" value="<?php echo $pembayaranObj->getTanggal($id); ?>"></td>
             </tr>
             <tr>
-                <td>Alamat</td>
+                <td>Bank</td>
                 <td>:</td>
-                <td><textarea name="alamat" cols="30" rows="10"><?php echo $row['alamat']; ?></textarea></td>
+                <td><input type="text" name="bank"  value="<?php echo $pembayaranObj->getBank($id); ?>"></td>
+            </tr>
+            <tr>
+                <td>Nominal</td>
+                <td>:</td>
+                <td><input type="text" name="nominal"  value="<?php echo $pembayaranObj->getNominal($id); ?>"></td>
+            </tr>
+            <tr>
+                <td>Nama Image</td>
+                <td>:</td>
+                <td><input type="text" name="nama_img"  value="<?php echo $pembayaranObj->getNamaimg($id); ?>"></td>
+            </tr>
+            <tr>
+            <td>Text Image</td>
+                <td>:</td>
+                <td><textarea name="alamat" cols="30" rows="10" value="<?php echo $pembayaranObj->getTextimg($id)?>"><?php echo $pembayaranObj->getTextimg($id)?></textarea></td>
             </tr>
             <tr>
                 <td></td>

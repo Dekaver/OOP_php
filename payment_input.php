@@ -2,22 +2,45 @@
 <html lang="en">
 
 <body>
+    <?php 
+        $pembayaranObj = new pembayaran();
+        $mahasiswaObj = new mahasiswa();
+    ?>
     <h1>Input Bukti Pembayaran</h1>
     <form action="payment_proses.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="aksi" value="inputmhs">
     <input type="hidden" name="post" value="1000000">
         <table>
-            <tr>
-                <td>date</td>
+        <tr>
+                <td>Id Pembayaran</td>
                 <td>:</td>
-                <td><input type="date" name="date"></td>
+                <td><input type="text" name="id"></td>
+            </tr>
+            <tr>
+                <td>NIM</td>
+                <td>:</td>
+                <td>
+                    <select name="nim">
+                        <option value="" selected disabled hidden>--Pilih--</option>
+                        <?php
+                        $result = $mahasiswaObj->getMahasiswa();
+                        foreach ($result as $row){
+                            echo "<option value=" . $row["nim"] . ">" . $row["nama_mhs"] . "</option>";
+                        }
+                        ?>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>BANK</td>
                 <td>:</td>
                 <td><input type="text" name="bank"></td>
             </tr>
-
+            <tr>
+                <td>tanggal</td>
+                <td>:</td>
+                <td><input type="date" name="tanggal"></td>
+            </tr>
             <tr>
                 <td>Nominal</td>
                 <td>:</td> 
@@ -41,13 +64,5 @@
             </tr>
         </table>
     </form>
-    <?php
-    // while ($row = mysqli_fetch_array($result)) {
-    //   echo "<div id='img_div'>";
-    //   	echo "<img src='images/".$row['image']."' >";
-    //   	echo "<p>".$row['image_text']."</p>";
-    //   echo "</div>";
-    // }
-  ?>
 </body>
 </html>
