@@ -83,13 +83,7 @@ class pembayaran extends Dbh{
     }
 
     public function uploadImg($namaimg, $textimg, $path){
-        $textimg = mysqli_real_escape_string($this->getMysqli(), $textimg);
-        $target = $path.basename($namaimg);
-        if (move_uploaded_file($_FILES['namaimg']['tmp_name'], $target)) {
-            echo "<script> alert('Image uploaded successfully')</script>";
-        }else{
-          echo "<script> alert('Image uploaded failed...')</script>";
-        }
+        
     }
     
 }
