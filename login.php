@@ -36,8 +36,7 @@
         </fieldset>
         <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $mysqli = new mysqli("localhost", "root", "", "prowebif");
-    $sql = "SELECT * FROM user where username='" . $_POST['username'] . "' and password='" . $_POST['password'] . "'";
+    
     $result = $mysqli->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
