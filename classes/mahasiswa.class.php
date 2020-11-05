@@ -12,7 +12,7 @@ class mahasiswa extends Dbh{
     public function getNim(){
         $sql = "SELECT nim FROM mahasiswa";
         $st = $this->connect()->query($sql);
-        $result = $st->fetch();
+        $result = $st->fetchAll();
         return $result;
     }
 

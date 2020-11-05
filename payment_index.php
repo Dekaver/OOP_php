@@ -11,9 +11,12 @@
 <body>
 <h1>Data Pembayaran</h1>
     <div class="content">
+    <?php 
+    if ($_SESSION['hakAkses']=='admin'){
+        echo '<a href="?f=payment_input">+ Pembayaran</a><br>';
+    }
+    ?>
     
-    <a href="?f=payment_input">+ Pembayaran</a>
-    <br>
     <?php
 	// Cek sudah login atau belum, kalau belum akan diredirect ke page logi. Penjelasan kode ini ada di file index.php
     if (isset($_SESSION["username"])) {
@@ -27,8 +30,8 @@
                 <tr>
                     <th>No</th>
                     <th>Id pembayaran</th>
-                    <th>Nim</th>
                     <th>Tanggal</th>
+                    <th>Nama</th>
                     <th>Bank</th>
                     <th>Nominal</th>
                     <th>Nama Image</th>
@@ -50,7 +53,7 @@
                 <td>" . $row["nominal"] . "</td>
                 <td>" . $row["nama_img"] . "</td>
                 <td>" . $row["text_img"] . "</td>
-                <td><a href='?f=payment_edit&&id_pembayaran=" . $row["id_pembayaran"] . "'>Edit</a>||<a href='controllers/pembayarancontroll.inc.php?aksi=hapus&&id_pembayaran=" . $row["id_pembayaran"] . "'>Hapus</a>
+                <td><a href='?f=payment_edit&&id_pembayaran=" . $row["id_pembayaran"] . "'>Edit</a>||<a href='controllers/paymentcontroll.inc.php?aksi=hapus&&id_pembayaran=" . $row["id_pembayaran"] . "'>Hapus</a>
             </tr>";       
         }
         echo "<tbody>
@@ -58,8 +61,8 @@
             <tr>
                 <th>No</th>
                 <th>Id pembayaran</th>
-                <th>Nim</th>
                 <th>Tanggal</th>
+                <th>Nama</th>
                 <th>Bank</th>
                 <th>Nominal</th>
                 <th>Nama Image</th>

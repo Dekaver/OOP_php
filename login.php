@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +15,6 @@
     <form class="container"  method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
     <img src="img/Logo-Web-ITK.png" alt="itk" id="itk">
     <img src="img/if-nav.png" alt="Informatika" id="informatika">
-
         <fieldset>
             <table>
                 <tr>
@@ -30,29 +31,60 @@
                     <td></td>
                     <td></td>
                     <td><input class="login" type="submit" value="Login">
-                        <input class="reset" type="reset" value="Reset"></td>
+                        <input class="reset" id="Rlogin" type="reset" value="Reset"></td>
                 </tr>
             </table>
         </fieldset>
-        <?php
+<?php
+include 'includes\class-autoload.inc.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    $result = $mysqli->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            session_start();
-            $_SESSION["username"] = $row['username'];
-            $_SESSION["password"] = $row['password'];
-            header("Location: index.php");
+    $user = new user();
+    $dosenObj = new dosen();
+    $mahasiswaObj = new mahasiswa();
+
+    $allNim = $mahasiswaObj->getNim();
+    $allNip = $dosenObj->getNip();
+    $result = $user->getUser();
+
+    $pesaneror='';
+    $i=0;
+    foreach ($result as $row){
+        if ($row['username'] === $_POST['username']){
+            
+            if ($row['password'] === $_POST['password']){
+                session_start();
+                $_SESSION["username"] = $row['username'];
+                $_SESSION["password"] = $row['password'];
+                $_SESSION['hakAkses'] = $row['hak_akses'];
+                header("Location: index.php");
+            }else{
+                $pesaneror='Incorrect Password';
+                $i++;
+                break;
+            }
         }
-    } else {
-        echo "<h4 id='red'>Incorrect Password or Username</h4><style>#red{color:red;}fieldset{border:3px solid red;}</style>";
+        $pesaneror='Username Not Found';
     }
+
+    if ($i==0){
+        foreach ($allNim as $value){
+            if (in_array($_POST['username'], $value)){
+                $pesaneror = "<p>Click <a href=Registrasi.php>here</a> for Registrasi as ".$_POST['username']."</p>";
+                $i++;
+            
+            }
+        }
+    }elseif ($i==0){
+        foreach ($allNip as $value){
+            if (in_array($_POST['username'], $value)){
+                $pesaneror = "<p>Click <a href=Registrasi.php>here</a> for Registrasi as ".$_POST['username']."</p>";
+                $i++;
+            }
+        }
+    }
+    echo "<h4 id='red'>". $pesaneror ."</h4><style>#red{color:red;}fieldset{border:3px solid red;}</style>";
 }
 ?>
     </form>
-    
-
-
 </body>
 </html>

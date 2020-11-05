@@ -11,8 +11,12 @@
 <body>
 <h1>Data Mahasiswa</h1>
     <div class="content">
+    <?php 
+    if ($_SESSION['hakAkses']=='admin'){
+        echo '<a href="?f=student_input">+ Data mahasiswa</a><br>';
+    }
+    ?>
     
-    <a href="?f=student_input">+ Data mahasiswa</a>
     <?php
 	
     if (isset($_SESSION["username"])) {
@@ -29,9 +33,12 @@
                     <th>Jenis Kelamin</th>
                     <th>Tahun Masuk</th>
                     <th>Dosen Wali</th>
-                    <th>Alamat</th>
-                    <th>Aksi</th>
-                </tr>
+                    <th>Alamat</th>';
+        if($_SESSION['hakAkses']=='admin'){
+            echo '<th>Aksi</th>';
+        }
+                    
+        echo '</tr>
             </thead>
             <tbody>';
         
@@ -47,9 +54,11 @@
                 <td>" . $row["jenis_kelamin"] . "</td>
                 <td>" . $row["tahunmasuk"] . "</td>
                 <td>" . $dosenObj->getNama($row["dosenwali"]) . "</td>
-                <td>" . $row["alamat_mhs"] . "</td>
-                <td><a href='?f=student_edit&&nim=" . $row["nim"] . "'>Edit</a>||<a href='controllers\studentcontroll.inc.php?aksi=hapus&&nim=" . $row["nim"] . "'>Hapus</a>
-            </tr>";
+                <td>" . $row["alamat_mhs"] . "</td>";
+            if($_SESSION['hakAkses']=='admin'){
+                echo "<td><a href='?f=student_edit&&nim=" . $row["nim"] . "'>Edit</a>||<a href='controllers\studentcontroll.inc.php?aksi=hapus&&nim=" . $row["nim"] . "'>Hapus</a>";
+            }
+            echo "</tr>";
         }
         
         echo "<tbody>
@@ -62,12 +71,13 @@
                 <th>Jenis Kelamin</th>
                 <th>Tahun Masuk</th>
                 <th>Dosen Wali</th>
-                <th>Alamat</th>
-                <th>Aksi</th>
-            </tr>
+                <th>Alamat</th>";
+                if($_SESSION['hakAkses']=='admin'){
+                    echo '<th>Aksi</th>';
+                }      
+        echo "</tr>
         </tfoot>
         </table>";
-        
     }else{
         header("Location: login.php");
     }

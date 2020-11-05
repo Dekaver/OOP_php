@@ -70,20 +70,17 @@ class pembayaran extends Dbh{
         $st->execute([$id_pembayaran, $tanggal, $bank, $nominal, $namaimg, $textimg, $nim]);
     }
 
-    public function removeMatakuliah($id_pembayaran){
+    public function removePembayaran($id_pembayaran){
         $sql = "DELETE FROM pembayaran WHERE id_pembayaran = ?";
         $st = $this->connect()->prepare($sql);
         $st->execute([$id_pembayaran]);
     }
 
-    public function updateMatakuliah($id_pembayaran, $tanggal, $bank, $nominal, $namaimg, $textimg, $nim, $oldid_pembayaran){
+    public function updatePembayaran($id_pembayaran, $tanggal, $bank, $nominal, $namaimg, $textimg, $nim, $oldid_pembayaran){
         $sql = "UPDATE pembayaran SET id_pembayaran = ?, tanggal=?, bank=?, nominal=?, nama_img=?, text_img=?, nim=? WHERE id_pembayaran=?";
         $st = $this->connect()->prepare($sql);
         $st->execute([$id_pembayaran, $tanggal, $bank, $nominal, $namaimg, $textimg, $nim, $oldid_pembayaran]);
     }
 
-    public function uploadImg($namaimg, $textimg, $path){
-        
-    }
     
 }

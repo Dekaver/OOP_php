@@ -11,9 +11,12 @@
 <body>
 <h1>Data Mata Kuliah</h1>
 <div class="content">
+<?php 
+    if ($_SESSION['hakAkses']=='admin'){
+        echo '<a href="?f=subject_input">+ Data Mahasiswa</a><br>';
+    }
+    ?>
     
-    <a href="?f=subject_input">+ Data Mahasiswa</a>
-    <br>
 
     <?php
     $matakuliahObj = new matakuliah();
@@ -28,35 +31,38 @@
                     <th>Kode Mata Kuliah</th>
                     <th>Nama Mata Kuliah</th>
                     <th>SKS</th>
-                    <th>Semester</th>
-                    <th>Aksi</th>
-                </tr>
+                    <th>Semester</th>';
+        if ($_SESSION['hakAkses']=='admin'){
+            echo '<th>Aksi</th>';
+        }
+        echo '</tr>
             </thead>
             </tbody>';
-            
-        
             foreach ($result as $row) {
                 echo "<tr>
                     <td>" . $row["kode_matakuliah"] . "</td>
                     <td>" . $row["nama_matakuliah"] . "</td>
                     <td>" . $row["sks"] . "</td>
-                    <td>" . $row["semester"] . "</td>
-                    <td><a href='?f=subject_edit&&kode_matakuliah=" . $row["kode_matakuliah"] . "'>Edit</a>||<a href='controllers/subjectcontroll.inc.php?aksi=hapus&&kode_matakuliah=" . $row["kode_matakuliah"] . "'>Hapus</a>
-                </tr>";
+                    <td>" . $row["semester"] . "</td>";
+                    if ($_SESSION['hakAkses']=='admin'){
+                        echo"<td><a href='?f=subject_edit&&kode_matakuliah=" . $row["kode_matakuliah"] . "'>Edit</a>||<a href='controllers/subjectcontroll.inc.php?aksi=hapus&&kode_matakuliah=" . $row["kode_matakuliah"] . "'>Hapus</a>";
+                    }
+                    
+                echo "</tr>";
             }
-        
         echo "</tbody>
             <tfoot>
                 <tr>
                     <th>Kode Mata Kuliah</th>
                     <th>Nama Mata Kuliah</th>
                     <th>SKS</th>
-                    <th>Semester</th>
-                    <th>Aksi</th>
-                </tr>
+                    <th>Semester</th>";
+        if ($_SESSION['hakAkses']=='admin'){
+            echo '<th>Aksi</th>';
+        }
+        echo "</tr>
             </tfoot>
             </table>";
-        
     }else{
         header("Location: login.php");
     }

@@ -28,7 +28,8 @@ include "includes/class-autoload.inc.php";
                     ?>
                     
                 </p>
-				<p>MENU</p>
+                <p>MENU</p>
+                
 				<li>
 					<a class="nav-link" href="index.php">Home</a>
 				</li>

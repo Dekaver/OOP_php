@@ -11,7 +11,13 @@
 <body>
     <h1>Data Dosen</h1>
     <div class="content">
-    <a id="btn-plus" href="?f=dosen_input">+ Data Dosen</a>
+    <?php 
+    if ($_SESSION['hakAkses']=='admin'){
+        echo '<a href="?f=dosen_input">+ Data Dosen</a><br>';
+    }
+    ?>
+    
+    
     <br>
     <?php
 	// Cek sudah login atau belum, kalau belum akan diredirect ke page logi. Penjelasan kode ini ada di file index.php
@@ -27,9 +33,11 @@
                         <th>Nama</th>
                         <th>Program studi</th>
                         <th>Pendidikan</th>
-                        <th>Alamat</th>
-                        <th>Aksi</th>
-                    </tr>
+                        <th>Alamat</th>';
+            if ($_SESSION['hakAkses']=='admin'){
+                echo '<th>Aksi</th>';
+            }
+            echo '</tr>
                 </thead>
                 <tbody>';
             $programstudiObj = new programstudi();
@@ -40,9 +48,12 @@
                     <td>" . $row["nama_dsn"] . "</td>
                     <td>" . $programstudiObj->getNama($row["id_prodi"]) . "</td>
                     <td>" . $row["pendidikan"] . "</td>
-                    <td>" . $row["alamat_dsn"] . "</td>
-                    <td><a href='?f=dosen_edit&&nip=" . $row["nip"] . "'>Edit</a>||<a href='controllers/dosencontroll.inc.php?aksi=hapus&&nip=" . $row["nip"] . "'>Hapus</a>
-                </tr>";
+                    <td>" . $row["alamat_dsn"] . "</td>";
+                if ($_SESSION['hakAkses']=='admin'){
+                    echo "<td><a href='?f=dosen_edit&&nip=" . $row["nip"] . "'>Edit</a>||<a href='controllers/dosencontroll.inc.php?aksi=hapus&&nip=" . $row["nip"] . "'>Hapus</a>";
+                }
+                
+                echo "</tr>";
             }
                            
             echo "</tbody>
@@ -52,9 +63,11 @@
                         <th>Nama</th>
                         <th>Program studi</th>
                         <th>Pendidikan</th>
-                        <th>Alamat</th>
-                        <th>Aksi</th>
-                    </tr>
+                        <th>Alamat</th>";
+            if ($_SESSION['hakAkses']=='admin'){
+                echo '<th>Aksi</th>';
+            }
+            echo        "</tr>
                 </tfoot>
                 </table>";
         }

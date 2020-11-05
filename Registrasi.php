@@ -1,70 +1,76 @@
-<!doctype html>
+
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/login.css">    
 </head>
 
 <body>
-  <?php
-  // define variables and set to empty values
-  $name = $email = $gender = $comment = $website = "";
+    <form class="container"  method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <img src="img/Logo-Web-ITK.png" alt="itk" id="itk">
+    <img src="img/if-nav.png" alt="Informatika" id="informatika">
+          <fieldset>
+            <table>
+                <tr>
+                    <td>Username</td>
+                    <td>:</td>
+                    <td><input placeholder="Username" type="text" name="username"></td>
+                </tr>
+                <tr>
+                    <td>New Password</td>
+                    <td>:</td>
+                    <td><input placeholder="Password" type="password" name="password"></td>
+                </tr>
+                <tr>
+                    <td>Confirm Password</td>
+                    <td>:</td>
+                    <td><input placeholder="Password" type="password" name="password"></td>
+                </tr>
+                <tr>
+                    <input class="login" type="submit" value="Registrasi">
+                    <input class="reset" id='Rregistrasi' type="reset" value="Reset"></td>
+                </tr>
+            </table>
+        </fieldset>
+<?php
+include 'includes\class-autoload.inc.php';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $userObj = new user();
+    $dosenObj = new dosen();
+    $mahasiswaObj = new mahasiswa();
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = test_input($_POST["name"]);
-    $email = test_input($_POST["email"]);
-  }
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-  function test_input($data)
-  {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-  }
-  ?>
+    $allNim = $mahasiswaObj->getNim();
+    $allNip = $dosenObj->getNip();
+    $hakAkses = '';
 
-  <h2>Input Data Dosen</h2>
-  <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <table>
-      <tr>
-        <td>Nama</td>
-        <td>:</td>
-        <td><input type="text" name="name"></td>
-      </tr>
-      <tr>
-        <td>No Kontak</td>
-        <td>:</td>
-        <td><input type="text" name="no_kontak"></td>
-      </tr>
-      <tr>
-        <td>Pendidikan Terakhir</td>
-        <td>:</td>
-        <td>
-          <input type="radio" name="s1" value="S1">S1
-          <input type="radio" name="s2" value="S2">S2</td>
-      </tr>
-      <tr>
-        <td>Tahun Lulus</td>
-        <td>:</td>
-        <td>
-          <select>
-            <?php
-            for ($i = 2015; $i <= 2018; $i++) {
-              echo "<option value=$i>$i</option>";
-            }
-            ?>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td><input type="submit" name="submit" value="Submit"></td>
-      </tr>
-    </table>
+    foreach ($allNim as $value){
+        if (in_array($_POST['username'], $value)){
+            $hakAkses = 'mahasiswa';
+        }
+    }
 
+    foreach ($allNip as $value){
+        if (in_array($_POST['username'], $value)){
+            $hakAkses = 'dosen';
+        }
+    }
+    if ($hakAkses == ''){
+      echo "<h4 id='red'>Username tidak Di Izinkan</h4><style>#red{color:red;}fieldset{border:3px solid red;}</style>";
+    }else{
+      $result = $userObj->addUser($username, $password, $hakAkses);
+      header('Location: login.php');
+    }
+}
+
+?>
+    </form>
+</body>
 </html>

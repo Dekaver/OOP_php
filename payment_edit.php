@@ -16,14 +16,14 @@
     ?>
     <h1>Edit Pembayaran</h1>
     <div class="content">
-    <form action="controllers/paymentcontroll.inc.php" method="post">
+    <form action="controllers/paymentcontroll.inc.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="aksi" value="edit">
         <input type="hidden" name="oldId" value="<?php echo $id ?>">
         <table>
             <tr>
                 <td>Id Pembayaran</td>
                 <td>:</td>
-                <td><input type="text" name="id" value="<?php echo $id; ?>"></td>
+                <td><input type="text" name="id_pembayaran" value="<?php echo $id; ?>"></td>
             </tr>
             <tr>
                 <td>NIM</td>
@@ -58,20 +58,19 @@
                 <td><input type="text" name="nominal"  value="<?php echo $pembayaranObj->getNominal($id); ?>"></td>
             </tr>
             <tr>
-                <td>Nama Image</td>
+                <td>Upload Bukti</td>
                 <td>:</td>
-                <td><input type="text" name="nama_img"  value="<?php echo $pembayaranObj->getNamaimg($id); ?>"></td>
+                <td><input type="file" name="namaimg"></td>
             </tr>
             <tr>
-            <td>Text Image</td>
+            <td>Keterangan</td>
                 <td>:</td>
-                <td><textarea name="alamat" cols="30" rows="10" value="<?php echo $pembayaranObj->getTextimg($id)?>"><?php echo $pembayaranObj->getTextimg($id)?></textarea></td>
+                <td><textarea name="textimg" cols="30" rows="10" value="<?php echo $pembayaranObj->getTextimg($id)?>"><?php echo $pembayaranObj->getTextimg($id)?></textarea></td>
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td><input type="submit" value="Submit">
-                    <input type="reset" value="Reset"></td>
+                <td><input type="submit" value="Submit"></td>
             </tr>
         </table>
     </form>
