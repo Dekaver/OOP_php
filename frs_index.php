@@ -7,15 +7,9 @@
     
 	// Cek sudah login atau belum, kalau belum akan diredirect ke page logi. Penjelasan kode ini ada di file index.php
     if (isset($_SESSION["username"])) {
-        //membuat objek mysql
+        
         $user = $_SESSION["username"];
-        $mysqli = new mysqli("localhost", "root", "", "prowebif");
-		//menjalankan query mysql
-        $sql = "SELECT nim, perkuliahan.kode_mk, nama_matakuliah, sks, perkuliahan.kelas  FROM perkuliahan 
-                INNER JOIN matakuliah 
-                INNER JOIN pengajar 
-                on matakuliah.kode_matakuliah = pengajar.kode_mk
-                WHERE nim = '$user'";
+        
         $result = $mysqli->query($sql);
         echo '<table border=1 id="dtVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0"
         width="100%">
