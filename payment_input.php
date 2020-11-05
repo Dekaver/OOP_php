@@ -52,11 +52,6 @@
                 <td><input type="file" name="namaimg"></td>
             </tr>
             <tr>
-                <td>keterangan</td>
-                <td>:</td>
-                <td><textarea name="textimg" cols="30" rows="10" placeholder="optional"></textarea></td>
-            </tr>
-            <tr>
                 <td></td>
                 <td></td>
                 <td><input type="submit" value="Submit">

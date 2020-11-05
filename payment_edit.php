@@ -63,10 +63,6 @@
                 <td><input type="file" name="namaimg"></td>
             </tr>
             <tr>
-            <td>Keterangan</td>
-                <td>:</td>
-                <td><textarea name="textimg" cols="30" rows="10" value="<?php echo $pembayaranObj->getTextimg($id)?>"><?php echo $pembayaranObj->getTextimg($id)?></textarea></td>
-            </tr>
             <tr>
                 <td></td>
                 <td></td>
